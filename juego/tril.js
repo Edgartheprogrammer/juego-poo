@@ -8,15 +8,6 @@ class Game {
         this.puntuación = 0;
         this.crearEsceneario();
         this.agregarEventos();
-        this.sonidoMoneda = new Audio (`sounds/mordida.wav`)
-        this.puntosElement = document.getElementById("puntos");
-    }
-
-    reproducirSonidoMoneda(){
-        this.sonidoMoneda.currentTime = 0;
-        this.sonidoMoneda.play();
-        
-
     }
     crearEsceneario(){
         this.Personaje = new Personaje();
@@ -37,16 +28,10 @@ class Game {
                 if(this.Personaje.colisionaCon(moneda)){
                     this.container.removeChild(moneda.element);
                     this.Monedas.splice(index,1)
-                    this.reproducirSonidoMoneda();
-                    this.actualizarPosicion(50)
                 }
             })
         },
-            100);
-    }
-    actualizarPosicion(puntos){
-        this.puntuación += puntos;
-        this.puntosElement.textContent = `${this.puntuación}`
+            100)
     }
 }
 class Personaje {       
@@ -57,8 +42,7 @@ class Personaje {
         this.height = 50;
         this.velocidad = 10;
         this.saltando = false;
-        this.element = document.createElement("img");
-        this.element.src = "images/rat.png"
+        this.element = document.createElement("div");
         this.element.classList.add("personaje");
         this.actualizarPosicion();
     }
@@ -118,10 +102,9 @@ class Moneda {
         this.y = Math.random() * 250 + 50;
         this.width = 30;
         this.height = 30;
-        this.element = document.createElement("img");
+        this.element = document.createElement("div");
         this.element.classList.add("moneda");
         this.actualizarPosicion();
-        this.element.src = "images/cheese.png"
     }
     actualizarPosicion(){
         this.element.style.left = `${this.x}px`;
