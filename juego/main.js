@@ -21,7 +21,7 @@ class Game {
     crearEsceneario(){
         this.Personaje = new Personaje();
         this.container.appendChild(this.Personaje.element);
-        for(let i=0; i < 5; i++){
+        for(let i=0; i < 8; i++){
             const moneda = new Moneda();
             this.Monedas.push(moneda);
             this.container.appendChild(moneda.element);
@@ -52,7 +52,7 @@ class Game {
 class Personaje {       
     constructor(){
         this.x = 50;
-        this.y = 300;
+        this.y = 500;
         this.width = 50;
         this.height = 50;
         this.velocidad = 10;
@@ -63,9 +63,12 @@ class Personaje {
         this.actualizarPosicion();
     }
     mover(evento){
-        if(evento.key === "ArrowRight"){
+        const container = document.getElementById("game-container")
+        const containerWidth = container.offsetWidth;
+
+        if(evento.key === "ArrowRight" && (this.x + this.width + this.velocidad) <= containerWidth){
             this.x += this.velocidad;
-        }else if(evento.key === "ArrowLeft"){
+        }else if(evento.key === "ArrowLeft" && (this.x - this.velocidad) >= 0 ){
             this.x -= this.velocidad
         }else if(evento.key === "ArrowUp" && !this.saltando){
             this.saltar();
@@ -74,7 +77,7 @@ class Personaje {
     }
     saltar(){
         this.saltando = true;
-        let alturaMaxima = this.y-100;
+        let alturaMaxima = this.y-500;
         const salto = setInterval(()=> {
             if(this.y > alturaMaxima){
                 this.y -= 250; //redondeo de la gravedad
@@ -88,8 +91,8 @@ class Personaje {
     }
         caer(){
             const gravedad = setInterval(() => {
-                if(this.y < 300){
-                    this.y += 10;
+                if(this.y < 500){
+                    this.y += 3;
                 }else {
                     clearInterval(gravedad);
                     this.saltando = false;
@@ -114,8 +117,8 @@ class Personaje {
 }
 class Moneda {
     constructor(){
-        this.x = Math.random() * 700 + 50;
-        this.y = Math.random() * 250 + 50;
+        this.x = Math.random() * 1300 + 7;
+        this.y = Math.random() * 300 + 10;
         this.width = 30;
         this.height = 30;
         this.element = document.createElement("img");

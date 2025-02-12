@@ -13,8 +13,8 @@ body {
   }
   #game-container {
     position: relative;
-    width: 1400px;
-    height: 800px;
+    width: 1300px;
+    height: 600px;
     margin: 20px auto;
     border: 10px solid #4b3f5c;
     background: url(./images/kitchen.jpg) no-repeat center center;
@@ -56,4 +56,14 @@ body {
     height: 100%;
     object-fit: cover;
     
+  }
+
+  h1{
+    color: rgb(25, 69, 122);
+    font-size: 50px;
+  }
+
+  #puntos{
+    font-size: 30px;
+    color: rgb(171, 50, 127);
   }
