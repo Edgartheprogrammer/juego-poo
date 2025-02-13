@@ -8,20 +8,26 @@ class Game {
         this.puntuación = 0;
         this.crearEsceneario();
         this.agregarEventos();
+        this.sonidoPersonaje = new Audio (`sounds/mouseSound.mp3`)
         this.sonidoMoneda = new Audio (`sounds/mordida.wav`)
         this.puntosElement = document.getElementById("puntos");
+    }
+
+    reproducirSonidoPersonaje(){
+        this.sonidoPersonaje.currentTime = 0;
+        this.sonidoPersonaje.play();
     }
 
     reproducirSonidoMoneda(){
         this.sonidoMoneda.currentTime = 0;
         this.sonidoMoneda.play();
+    }
         
 
-    }
     crearEsceneario(){
         this.Personaje = new Personaje();
         this.container.appendChild(this.Personaje.element);
-        for(let i=0; i < 8; i++){
+        for(let i=0; i < 10; i++){
             const moneda = new Moneda();
             this.Monedas.push(moneda);
             this.container.appendChild(moneda.element);
@@ -38,7 +44,7 @@ class Game {
                     this.container.removeChild(moneda.element);
                     this.Monedas.splice(index,1)
                     this.reproducirSonidoMoneda();
-                    this.actualizarPosicion(50)
+                    this.actualizarPosicion(100)
                 }
             })
         },
@@ -65,13 +71,19 @@ class Personaje {
     mover(evento){
         const container = document.getElementById("game-container")
         const containerWidth = container.offsetWidth;
+        let seMovio = false;
 
         if(evento.key === "ArrowRight" && (this.x + this.width + this.velocidad) <= containerWidth){
             this.x += this.velocidad;
+            seMovio = true
         }else if(evento.key === "ArrowLeft" && (this.x - this.velocidad) >= 0 ){
             this.x -= this.velocidad
+            seMovio = true
         }else if(evento.key === "ArrowUp" && !this.saltando){
             this.saltar();
+        }
+        if(seMovio) {
+            juego.reproducirSonidoPersonaje();
         }
         this.actualizarPosicion();
     }
@@ -92,7 +104,7 @@ class Personaje {
         caer(){
             const gravedad = setInterval(() => {
                 if(this.y < 500){
-                    this.y += 3;
+                    this.y += 4;
                 }else {
                     clearInterval(gravedad);
                     this.saltando = false;
@@ -118,7 +130,7 @@ class Personaje {
 class Moneda {
     constructor(){
         this.x = Math.random() * 1300 + 7;
-        this.y = Math.random() * 300 + 10;
+        this.y = Math.random() * 500 + 10;
         this.width = 30;
         this.height = 30;
         this.element = document.createElement("img");
