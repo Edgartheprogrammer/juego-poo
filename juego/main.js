@@ -138,7 +138,7 @@ class Moneda {
         this.element = document.createElement("img");
         this.element.classList.add("moneda");
         this.actualizarPosicion();
-        this.element.src = "images/cheese.png"
+        this.element.src = "images/queso.png"
     }
     actualizarPosicion(){
         this.element.style.left = `${this.x}px`;
