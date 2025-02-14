@@ -11,6 +11,7 @@ class Game {
         this.sonidoPersonaje = new Audio (`sounds/mouseSound.mp3`)
         this.sonidoMoneda = new Audio (`sounds/mordida.wav`)
         this.puntosElement = document.getElementById("puntos");
+        this.checkColisiones();
     }
 
     reproducirSonidoPersonaje(){
@@ -27,7 +28,7 @@ class Game {
     crearEsceneario(){
         this.Personaje = new Personaje();
         this.container.appendChild(this.Personaje.element);
-        for(let i=0; i < 10; i++){
+        for(let i=0; i < 8; i++){
             const moneda = new Moneda();
             this.Monedas.push(moneda);
             this.container.appendChild(moneda.element);
@@ -44,11 +45,12 @@ class Game {
                     this.container.removeChild(moneda.element);
                     this.Monedas.splice(index,1)
                     this.reproducirSonidoMoneda();
-                    this.actualizarPosicion(100)
+                    this.actualizarPosicion(100);
+                    
                 }
             })
         },
-            100);
+            50);
     }
     actualizarPosicion(puntos){
         this.puntuación += puntos;
@@ -89,10 +91,10 @@ class Personaje {
     }
     saltar(){
         this.saltando = true;
-        let alturaMaxima = this.y-500;
+        let alturaMaxima = this.y-465;
         const salto = setInterval(()=> {
             if(this.y > alturaMaxima){
-                this.y -= 250; //redondeo de la gravedad
+                this.y -= 10; //redondeo de la gravedad
             }else{
                 clearInterval(salto);
                 this.caer()
